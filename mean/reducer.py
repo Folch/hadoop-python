@@ -3,42 +3,39 @@
 from operator import itemgetter
 import sys
 
-current_word = None
-current_count = 0
-word = None
-total = 0
+current_airport = None
+current_delay = 0
+n=0
 # input comes from STDIN
 for line in sys.stdin:
     # remove leading and trailing whitespace
-    line = line.strip()
+	line = line.strip()
 
     # parse the input we got from mapper.py
-    word, count = line.split('\t', 1)
-
-    # convert count (currently a string) to int
-    try:
-        count = int(count)
-    except ValueError:
-        # count was not a number, so silently
-        # ignore/discard this line
-        continue
-
-    # this IF-switch only works because Hadoop sorts map output
-    # by key (here: word) before it is passed to the reducer
-    if current_word == word:
-        current_count += count
-    else:
-        if current_word:
-            # write result to STDOUT
-            print '%s\t%s' % (current_word, current_count)
-            total += current_count
-        current_count = count
-        current_word = word
+	year, airport, delay = line.split('\t', 2)
+    
+	try:
+		delay = float(delay)
+	except ValueError:
+		continue
+	
+	if current_airport == airport:
+		current_delay += delay
+		n += 1
+	else:
+		if current_airport:
+			# write result to STDOUT
+			mean = current_delay/n
+			print '%s\t%s\t%f' % (year,current_airport, mean)  
+		
+		n=0
+		current_delay = delay
+		current_airport = airport
 
 # do not forget to output the last word if needed!
-if current_word == word:
-    print '%s\t%s' % (current_word, current_count)
-    total += current_count
-print '%s\t%s' % ('total', total)
+if current_airport == airport:
+	mean = current_delay/n
+	print '%s\t%s\t%f' % (year,current_airport, mean)
+
 
     
