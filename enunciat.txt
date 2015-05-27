@@ -3,3 +3,5 @@ Mitja de temps de delay d'arribada (o sortida) per any i per aeroport (Barcelona
 Vols cancel·lats (ho explica la setmana que ve)
 
 head input/2007.csv -n 500 | python mean/mapper.py | sort | python mean/reducer.py
+
+Matar un job: hadoop job -kill <job_num>
