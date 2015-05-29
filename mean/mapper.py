@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 import sys
 
-window_size = 500
-counter = 0
 d = {}
 # input comes from STDIN (standard input)
 for line in sys.stdin:
@@ -15,27 +13,21 @@ for line in sys.stdin:
 	delay = features[15]
 	cancelled = features[21] == "1"
 	
-	try:
-		delay = float(delay)
-	except ValueError:
-		continue
+	
 	
 	if not cancelled:
+		try:
+			delay = float(delay)
+		except ValueError:
+			continue
 		
-		if counter == window_size:
-			for y, a in d:
-				print "%s,%s\t%s\t%s" % (y, a, d[(y, a)][0], d[(y, a)][1])
-			counter = 0
-			d = {}
+		if (year, airport) not in d:
+			d[(year, airport)] = [delay, 1]
 		else:
-			if (year, airport) not in d:
-				d[(year, airport)] = [delay, 1]
-			else:
-				d[(year, airport)][0] += delay
-				d[(year, airport)][1] += 1
-			counter += 1
+			d[(year, airport)][0] += delay
+			d[(year, airport)][1] += 1
 # flush dict
 for y, a in d:
-	print "%s,%s\t%s\t%s" % (y, a, d[(y, a)][0], d[(y, a)][1])
+	print "%s,%s\t%f\t%d" % (y, a, d[(y, a)][0], d[(y, a)][1])
 	
 	

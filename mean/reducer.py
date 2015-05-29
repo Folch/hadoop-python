@@ -34,10 +34,9 @@ for line in sys.stdin:
 		current_counts = counts
 		current_airport = airport
 
-# do not forget to output the last word if needed!
 if current_airport == airport:
 	mean = current_delay/current_counts
-	print '%s\t%s\t%f' % (year,current_airport, mean)  
+	print '%s\t%s\t%f' % (year,current_airport, mean)   
 
 
     
