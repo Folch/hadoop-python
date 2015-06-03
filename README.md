@@ -2,9 +2,7 @@ A partir de les dades proporcionades al campus (vols realitzats en un any concre
 
 Per provar el codi python sense necessitat d'executar-ho a través de hadoop podem fer:
 
-```python
-cat input/2007.csv | python mean/mapper.py | sort | python mean/reducer.py
-```
+`cat input/2007.csv | python mean/mapper.py | sort | python mean/reducer.py`
 
 Comandes hadoop:
 * Matar un procés: `hadoop job -kill <job_num>` 
